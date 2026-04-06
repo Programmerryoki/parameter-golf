@@ -2147,7 +2147,7 @@ def main() -> None:
     if int(os.environ.get("TORCHDYNAMO_DISABLE", "0")):
         compiled_model = base_model
     else:
-        compiled_model = torch.compile(base_model, dynamic=False, fullgraph=True, mode="reduce-overhead")
+        compiled_model = torch.compile(base_model, dynamic=False, fullgraph=True)
     model: nn.Module = DDP(compiled_model, device_ids=[local_rank], broadcast_buffers=False) if distributed else compiled_model
     if args.recurrence_repeats > 0:
         block_named_params = (
